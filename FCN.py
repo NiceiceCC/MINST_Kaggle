@@ -150,7 +150,8 @@ learning_rate_reduction = ReduceLROnPlateau(monitor='val_accuracy',
                                             verbose=1, 
                                             factor=0.5, 
                                             min_lr=0.0001)
-checkpoint = ModelCheckpoint(filepath='FCN_Full.hd5', mode='max', monitor='val_accuracy', verbose=2, save_best_only=True)
+model_weights = 'best_model_weights.hd5'
+checkpoint = ModelCheckpoint(filepath= model_weights, mode='max', monitor='val_accuracy', verbose=2, save_best_only=True)
 datagen = ImageDataGenerator(
         featurewise_center=False,  # set input mean to 0 over the dataset
         samplewise_center=False,  # set each sample mean to 0
@@ -189,8 +190,8 @@ ax[1].plot(history.history['val_accuracy'], color='r',label="Validation accuracy
 legend = ax[1].legend(loc='best', shadow=True)
 plt.show()
 #%%
-model = buildNoDropout()
-model.load_weights('FCN99643.hd5')
+
+model.load_weights(model_weights)
 test_label = model.predict(test)
 test_label = np.argmax(test_label, axis = 1)
 df = pd.DataFrame([[i+1,l] for i,l in enumerate(test_label)],columns = ['ImageId','Label'])
