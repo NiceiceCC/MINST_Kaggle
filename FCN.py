@@ -171,7 +171,7 @@ datagen = ImageDataGenerator(
 datagen.fit(X_train)
 #%%
 # Fit the model
-epochs = 30 # Turn epochs to 30 to get 0.9967 accuracy
+epochs = 30 
 batch_size  = 80
 
 history = model.fit_generator(datagen.flow(X_train,Y_train, batch_size=batch_size), 
